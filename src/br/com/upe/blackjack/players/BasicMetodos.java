@@ -8,8 +8,8 @@ import br.com.upe.blackjack.table.Carta;
 public abstract class BasicMetodos{
 	private ArrayList<Carta> mao = new ArrayList<Carta>();
 	protected int pontos = 0;
-	protected boolean estourou = false;
-	protected boolean win = false;
+	private boolean parou = false;
+	private boolean win = false;
 	
 	public void novaCarta (Carta carta) {
 		mao.add(carta);
@@ -17,14 +17,16 @@ public abstract class BasicMetodos{
 	
 	public void geraValorDasCartas(){
 		if (mao != null) {
+			int aux = 0;
 	        int temAs = 0;
 	        for(Carta carta : mao){
 	        	if (carta.getFace().equals("A")) {
 	        		temAs = temAs + 1;
 	        	}
-	        	this.pontos = this.pontos + carta.getValor();
+	        	aux = aux + carta.getValor();
 	        	
 	        }
+	        this.pontos = aux;
 	        temAs(temAs);
 	    }
 		
@@ -44,21 +46,20 @@ public abstract class BasicMetodos{
         }
 	}
 	
-	public boolean ganhou(int pontos) {
-		if (pontos > 21) {
-			estourou = true;
-			win = false;
-			return false;
+	public boolean vinteeum() {
+		if (this.pontos == 21) {
+			return true;
 		}
-		if (pontos == 21) {
-			estourou = false;
-			win = true;
-			return true; 
-		}
-		
 		return false;
 	}
 	
+	public boolean estorou() {
+		if (this.pontos > 21) {
+			return true;
+		}
+		return false;
+	}
+		
 	public void LimpaCartas(){
         mao.clear();
 	}
@@ -86,21 +87,25 @@ public abstract class BasicMetodos{
 		} 
 		return aux;
 	}
-	
-	public boolean getEstourou() {
-		return estourou;
+			
+	public Carta getPrimeiraCarta () {
+		return this.mao.get(0);
 	}
-	
-	public void setEstourou(boolean e){
-		estourou = e;
+
+	public boolean getParou() {
+		return parou;
 	}
-	
+
+	public void setParou(boolean parou) {
+		this.parou = parou;
+	}
+
 	public boolean getWin() {
 		return win;
 	}
-	
-	public Carta getPrimeiraCarta () {
-		return this.mao.get(0);
+
+	public void setWin(boolean win) {
+		this.win = win;
 	}
 	
 }

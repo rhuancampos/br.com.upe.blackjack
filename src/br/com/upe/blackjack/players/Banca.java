@@ -13,38 +13,56 @@ public class Banca extends BasicMetodos {
 	public void iniciarRodada(ArrayList<Jogador> jogadores, Banca banca, int quantidade) {
 		Baralho baralho = new Baralho();
 		
-		System.out.println("<------------------------------->");
-		System.out.println("Rodada iniciada!");
+		System.out.println("<---------------Rodada iniciada!--------------->");
 		System.out.println("Coletando apostas");
-		
 		banca.estado.pegarApostas(jogadores);
-						
 		System.out.println("Apostas coletadas");
+		
+		
 		System.out.println("<------------------------------->");
 		System.out.println("Distribuindo cartas...");
-		
 		banca.estado.destribuirCartas(jogadores, baralho, banca);
-		
 		System.out.println("Cartas distribuidas");
 		System.out.println("<------------------------------->");
+		
+		
 		System.out.println("A primeira da mao da banca eh: " + super.getPrimeiraCarta().getCarta());
-		boolean laco = true;
-		while (laco) {
-			laco = banca.estado.rodada(jogadores, baralho);
-			if (banca.win) {
-				System.out.println("A banca somou 21 pontos, e ganhou!");
-				laco = false;
-				break;
-			}	
-			if(banca.estourou) {
-				System.out.println("A banca estourou");
-				banca.estado.jogadorGanhador(jogadores);
-				laco = false;
-				break;
-			} else {
-				banca.estado.jogar(banca, baralho);
+		
+
+		banca.estado.rodada(jogadores, baralho, banca);
+			
+		if (banca.vinteeum()) {
+			System.out.println("A banca somou 21 pontos, e ganhou!");
+		}	
+			
+		banca.estado.jogar(banca, baralho);
+			
+		if(banca.estorou()) {
+			System.out.println("A banca estourou");
+			banca.estado.ganhadores(jogadores);
+		} 
+		
+		if (banca.getParou()) {
+			for(Jogador j : jogadores) {
+				if (j.getParou()) {
+					if (j.getPontos() > banca.getPontos()) {
+						System.out.println(j.getNome() + " voce ganhou da banca com " + j.getPontos() + " pontos e a banca tinha " + banca.getPontos() + " pontos.");
+						System.out.println("Suas cartas foram: ");
+						j.imprimirMao();
+						j.banco.premioGanhador(j, j.vinteeum());
+						jogoSalvo(jogadores, banca);
+					} else {
+						if (j.getPontos() == banca.getPontos()) {
+							System.out.println(j.getNome() + " voce empatou com a banca " + j.getPontos() + "pontos");
+							jogoSalvo(jogadores, banca);
+						} else {
+							System.out.println(j.getNome() + " voce perdeu da banca com " + j.getPontos() + "pontos e a banca tinha " + banca.getPontos() + " pontos.");
+							jogoSalvo(jogadores, banca);
+						}
+					}
+				}
 			}
-		}							
+		}
 	}
 			
 	public Jogador novoJogador() {
@@ -59,24 +77,61 @@ public class Banca extends BasicMetodos {
 		return jogador;
 	}
 	
+	public void removerJogador (ArrayList<Jogador> jogadores) {
+		@SuppressWarnings("resource")
+		Scanner in = new Scanner(System.in);
+	    int aux = 1;
+	       
+	    System.out.println("Qual? (digite o numero)");
+
+	    for (Jogador j : jogadores) {
+	    	System.out.println(aux + " " + j.getNome());
+	    	aux = aux + 1;
+	    }
+	    
+	    aux = in.nextInt();
+	    
+	    jogadores.remove(aux - 1);
+	}
+	
 	public void criarRodada(ArrayList<Jogador> jogadores, Banca banca){
-			ArrayList<Jogador> j = new ArrayList<Jogador>();
+		ArrayList<Jogador> j = new ArrayList<Jogador>();
+		if (jogadores == null) {
 			j.add(novoJogador());
-			
-	       @SuppressWarnings("resource")
-	       	       
-	       Scanner in = new Scanner(System.in);
-	       int opcao;
+		}
+		
+		if (jogadores != null) {
+			@SuppressWarnings("resource")
+			Scanner in = new Scanner(System.in);
+		    int opcao;
+		       
+		    System.out.println("<------------------------------->");
+		    System.out.println("Remover jogador");
+		    System.out.println("1 - Sim");
+		    System.out.println("2 - Nao");
+		    opcao = in.nextInt();
+		    switch (opcao) {
+			case 1:
+				removerJogador(jogadores);
+				break;
+		    }
+		    
+		}
+		
+	    @SuppressWarnings("resource")
+	      	       
+	    Scanner in = new Scanner(System.in);
+	    int opcao;
 	       
-	       System.out.println("<------------------------------->");
-	       System.out.println("Mais algum jogador?");
-	       System.out.println("0 - Sim");
-	       System.out.println("1 - Nao");
-	       opcao = in.nextInt();
-	       System.out.println("<------------------------------->");
+	    System.out.println("<------------------------------->");
+	    System.out.println("Mais algum jogador?");
+	    System.out.println("1 - Sim");
+	    System.out.println("2 - Nao");
+	    opcao = in.nextInt();
+	    System.out.println("<------------------------------->");
 	       
-	       switch (opcao) {
-			case 0:
+	    switch (opcao) {
+			case 1:
 										
 				System.out.println("<------------------------------->");
 			    System.out.println("Quantos?");
@@ -90,17 +145,14 @@ public class Banca extends BasicMetodos {
 			    iniciarRodada(j,banca,quantidade);
 				break;
 
-			case 1:
+			case 2:
 				iniciarRodada(j,banca,1);
 				
 				break;
 			default:
 				break;
-			}
-	       
-	       
-	       
-	   }
+		}
+	}
 	
 	public void NovoJogo(Banca banca){
 		@SuppressWarnings({ "resource", "unused" })
@@ -119,14 +171,18 @@ public class Banca extends BasicMetodos {
 	    	  System.out.println("<------------------------------->");
 	          System.out.println("1 - Iniciar rodada.");
 	          System.out.println("2 - Salvar jogo.");
-	          System.out.println("0 - Voltar Menu Inicial.");
 	          System.out.print("Digite sua opçao: ");
 	          opcao = in.nextInt();
 	          System.out.println("<------------------------------->");
 	          
 	       switch (opcao) {
 				case 1:
-					                 
+					if (jogadores != null) {
+						System.out.println("Rodada vai começar com os jogadores: ");
+						for (Jogador j : jogadores) {
+							System.out.println(j.getNome());
+						}
+					}       
 	                criarRodada(jogadores, banca);
 					
 					break;

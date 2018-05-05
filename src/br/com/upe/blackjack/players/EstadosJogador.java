@@ -14,33 +14,40 @@ public class EstadosJogador {
 		return Instance;
 	}
 	
-	public boolean jogar(Jogador j, Baralho baralho) {
-		j.geraValorDasCartas();
-		if (j.ganhou(j.getPontos())) {
+	public void jogar(Jogador j, Baralho baralho) {
+		while (true) {
+			j.geraValorDasCartas();
+			if (j.vinteeum()) {
+				System.out.println("<------------------------------->");
+			    System.out.println(j.getNome() + " voce tem 21 pontos. e venceu com as cartas: ");
+			    j.imprimirMao();
+			    j.banco.premioGanhador(j, true);
+			    break;
+			}
+			if (j.estorou()) {
+				System.out.println("<------------------------------->");
+			    System.out.println(j.getNome() + " voce tem " + j.getPontos() + " pontos. E ESTOUROU");
+			    j.imprimirMao();
+			    System.out.println(" ");
+			    System.out.println("<------------------------------->");
+			    break;
+			}
 			System.out.println("<------------------------------->");
-		    System.out.println(j.getNome() + "voce tem " + j.getPontos() + " pontos. e venceu com as cartas: Deseja pegar outra carta?");
+		    System.out.println(j.getNome() + " voce tem " + j.getPontos() + " pontos. Com as cartas: ");
 		    j.imprimirMao();
-			return true;
+		    System.out.println(" ");
+		    aumentarAposta (j);
+		    if (pegarOutraCarta(j, baralho)) {
+		    	j.setParou(true);
+		    	break;
+		    }
 		}
-		if (j.estourou) {
-			System.out.println("<------------------------------->");
-		    System.out.println(j.getNome() + "voce tem " + j.getPontos() + " pontos. E ESTOUROU");
-		    j.imprimirMao();
-			return true;
-		}
-		System.out.println("<------------------------------->");
-	    System.out.println(j.getNome() + "voce tem " + j.getPontos() + " pontos. Com as cartas: ");
-	    j.imprimirMao();
-	    System.out.println(" ");
-	    pegarOutraCarta(j, baralho);
-	    aumentarAposta (j);
-	   	return false;
 	}
 	
 	public void apostando(Jogador j) {
 		j.banco.coletarAposta(j);
 	}
-	
+		
 	public void aumentarAposta(Jogador j) {
 		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
@@ -57,10 +64,9 @@ public class EstadosJogador {
 		default:
 		break;
 	    }
-	    System.out.println("<------------------------------->");
 	}
 	
-	public void pegarOutraCarta (Jogador j, Baralho baralho) {
+	public boolean pegarOutraCarta (Jogador j, Baralho baralho) {
 		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
 		System.out.println("Deseja pegar outra carta?");
@@ -71,10 +77,15 @@ public class EstadosJogador {
 	    switch (opcao) {
 		case 1:
 			j.novaCarta(baralho.retiraPrimeiraCartaDoBaralho());
-		break;
+			return false;
+
+		case 2:
+			return true;
+			
 		default:
 		break;
 	    }
+		return false;
 	}
 	
 	public void esperando () {

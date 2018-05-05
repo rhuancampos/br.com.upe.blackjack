@@ -16,16 +16,18 @@ public class Banco {
 			apostar(in.nextFloat());			
 	}
 	
-	public void apostar (float aposta) {
-			this.dinheiro = this.dinheiro - aposta;
-			this.aposta = aposta;
+	public void apostar (float a) {
+			this.dinheiro = this.dinheiro - a;
+			this.aposta = a;
 	}
 	
 	public void premioGanhador(Jogador j, boolean vinteeum) {
 		if(vinteeum) {
-			this.dinheiro = this.dinheiro + (this.aposta * 1.50f);
+			System.out.println(j.getNome() + " voce ganhou R$ " + (this.aposta * 1.50f));
+			this.dinheiro = this.dinheiro + this.aposta + (this.aposta * 1.50f);
 		}	else	{
-			this.dinheiro = this.dinheiro + (this.aposta * 2);
+			System.out.println(j.getNome() + " voce ganhou R$ " + this.aposta);
+			this.dinheiro = this.dinheiro + this.aposta + this.aposta;
 		}
 	}
 	

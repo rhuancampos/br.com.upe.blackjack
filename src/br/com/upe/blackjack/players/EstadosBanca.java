@@ -1,7 +1,6 @@
 package br.com.upe.blackjack.players;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import br.com.upe.blackjack.table.Baralho;
 
@@ -18,9 +17,14 @@ public class EstadosBanca {
 	}
 	
 	public void jogar(Banca banca, Baralho baralho) {
-		banca.geraValorDasCartas();
-		if (banca.getPontos() < 17) {
-			banca.novaCarta(baralho.retiraPrimeiraCartaDoBaralho());
+		while(true) {
+			banca.geraValorDasCartas();
+			if (banca.getPontos() < 17) {
+				banca.novaCarta(baralho.retiraPrimeiraCartaDoBaralho());
+			} else {
+				banca.setParou(true);
+				break;
+			}
 		}
 	}
 	
@@ -43,31 +47,24 @@ public class EstadosBanca {
 		}
 	}
 	
-	public boolean rodada (ArrayList<Jogador> jogadores, Baralho baralho) {
+	public void rodada (ArrayList<Jogador> jogadores, Baralho baralho, Banca b) {
 		if (jogadores != null) {
 			for (Jogador j : jogadores) {
-				if (j.win) {
-					return false;
-				}
-				if (j.estourou) {
-					j.estado.estourou(j);
-				} else {
-					j.estado.jogar(j, baralho);
-				}
-			}
-		} else {
-			return false;
+				j.estado.jogar(j, baralho);
+			} 
 		}
-		return true;
 	}
 	
-	public void jogadorGanhador(ArrayList<Jogador> jogadores) {
-
-		
-		Collections.sort(jogadores);
-		
-		if (jogadores.get(0).getPontos() == jogadores.get(1).getPontos()) {
-			
+	public void ganhadores(ArrayList<Jogador> jogadores) {
+		if (jogadores != null) {
+			for (Jogador j : jogadores) {
+				if(j.estorou()) {
+					System.out.println(j.getNome() + " voce estourou");
+				} else {
+					System.out.println(j.getNome() + " voce ganhou com " + j.getPontos() + " pontos.");
+					j.banco.premioGanhador(j, j.vinteeum());
+				}
+			}
 		}
 	}
 

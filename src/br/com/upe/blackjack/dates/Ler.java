@@ -62,17 +62,17 @@ public static ArrayList<Jogador> retornaJogadores(){
 		
 		if (j == null) {
 			return null;
+		} else {
+			Collections.sort(j);
+			
+			ArrayList<Jogador> aux = new ArrayList<Jogador>();
+			
+			for (int i = 0; i < 4; i++) {
+				aux.add((Jogador) j.get(i));
+			}
+			
+			return aux;
 		}
-		
-		Collections.sort(j);
-		
-		ArrayList<Jogador> aux = new ArrayList<Jogador>();
-		
-		for (int i = 0; i < 4; i++) {
-			aux.add((Jogador) j.get(i));
-		}
-		
-		return aux;
 	}
 	
 		public static void CarregaJogo(Jogador jogador){  
@@ -91,13 +91,13 @@ public static ArrayList<Jogador> retornaJogadores(){
 			   System.out.println("---- Jogadores Salvos: ----\n");
 				   
 			   	   for(int x = 0; x < jogadores.size(); x++){
-					   System.out.println(Integer.toString(x) +" "+ jogadores.get(x).toString());
+					   System.out.println(Integer.toString(x) +" "+ jogadores.get(x).getNome());
 				   }
 				   System.out.println();
 				   
 				   int opcao;
 				   @SuppressWarnings("resource")
-				Scanner in = new Scanner(System.in);
+				   Scanner in = new Scanner(System.in);
 				   System.out.println("Selecione um jogador:");
 				   opcao = in.nextInt();
 				   
@@ -121,7 +121,7 @@ public static ArrayList<Jogador> retornaJogadores(){
 		   
 			  ArrayList<Jogador> jogadores = rank();
 			  
-			  if(!jogadores.isEmpty()){
+			  if(jogadores != null){
 				  int tamanho = 5;
 				  if(jogadores.size() < 5){
 					  tamanho = jogadores.size();
@@ -138,6 +138,8 @@ public static ArrayList<Jogador> retornaJogadores(){
 				  System.out.println("\n ------------------------------------------- ");
 				  System.out.println("");
 				  
+			  } else {
+				  System.out.println("\n sem jogos salvos ");
 			  }
 	   }
 
