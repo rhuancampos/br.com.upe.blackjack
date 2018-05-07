@@ -39,7 +39,7 @@ public class Jogador extends BasicMetodos implements Comparable<Jogador> {
 		if (this.pontos > outroJogador.getPontos()) {
 	          return -1;
 	     }
-	     if (this.pontos < outroJogador	.getPontos()) {
+	     if (this.pontos < outroJogador.getPontos()) {
 	          return 1;
 	     }
 		return 0;
