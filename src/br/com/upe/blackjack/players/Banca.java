@@ -28,12 +28,12 @@ public class Banca extends BasicMetodos {
 		
 		System.out.println("A primeira da mao da banca eh: " + super.getPrimeiraCarta().getCarta());
 		
-
-		banca.estado.rodada(jogadores, baralho, banca);
-			
 		if (banca.vinteeum()) {
 			System.out.println("A banca somou 21 pontos, e ganhou!");
 		}	
+			
+
+		banca.estado.rodada(jogadores, baralho, banca);
 			
 		banca.estado.jogar(banca, baralho);
 			

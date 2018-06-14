@@ -32,9 +32,11 @@ public class EstadosBanca {
 		if (jogadores != null) {
 			for (Jogador j : jogadores) {
 				j.novaCarta(baralho.retiraPrimeiraCartaDoBaralho());
-				j.novaCarta(baralho.retiraPrimeiraCartaDoBaralho());
 			}
 			banca.novaCarta(baralho.retiraPrimeiraCartaDoBaralho());
+			for (Jogador j : jogadores) {
+				j.novaCarta(baralho.retiraPrimeiraCartaDoBaralho());
+			}
 			banca.novaCarta(baralho.retiraPrimeiraCartaDoBaralho());
 		}
 	}

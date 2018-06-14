@@ -22,6 +22,17 @@ public class Baralho {
 			
 	public void misturaBaralho(){
         Collections.shuffle(baralho);
+        Carta c1 = new Carta("Copas", 10, "10");
+        Carta c2 = new Carta("Copas", 11, "A");
+        Carta c3 = new Carta("Copas", 7, "7");
+        Carta c4 = new Carta("Copas", 11, "A");
+        
+        
+        this.baralho.set(0, c4);
+        this.baralho.set(1, c3);
+        this.baralho.set(2, c2);
+        this.baralho.set(3, c1);
+     
     }
 	
 	public void imprimeBaralho(){

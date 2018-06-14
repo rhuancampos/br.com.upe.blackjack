@@ -13,7 +13,8 @@ public class Banco {
 			@SuppressWarnings("resource")
 			Scanner in = new Scanner(System.in);
 			System.out.println( j.getNome() + " voce tem R$ " + this.dinheiro + ". Quanto deseja apostar? ");
-			apostar(in.nextFloat());			
+			apostar(in.nextFloat());
+			System.out.println(this.dinheiro);
 	}
 	
 	public void apostar (float a) {
