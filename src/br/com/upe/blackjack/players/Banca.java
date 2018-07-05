@@ -4,26 +4,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import br.com.upe.blackjack.dates.Gravar;
-import br.com.upe.blackjack.table.Baralho;
+import br.com.upe.blackjack.interfaces.VBanca;
+import br.com.upe.blackjack.interfaces.VBaralho;
+import br.com.upe.blackjack.interfaces.VJogador;
 
 
 public class Banca extends BasicMetodos {
-	EstadosBanca estado = EstadosBanca.getInstance();
+	private EstadosBanca estado = EstadosBanca.getInstance();
 
-	public void iniciarRodada(ArrayList<Jogador> jogadores, Banca banca, int quantidade) {
-		Baralho baralho = new Baralho();
+	public void iniciarRodada(ArrayList<VJogador> jogadores, VBanca banca, int quantidade) {
+		VBaralho baralho = new VBaralho();
 		
-		System.out.println("<---------------Rodada iniciada!--------------->");
-		System.out.println("Coletando apostas");
-		banca.estado.pegarApostas(jogadores);
-		System.out.println("Apostas coletadas");
-		
-		
-		System.out.println("<------------------------------->");
-		System.out.println("Distribuindo cartas...");
-		banca.estado.destribuirCartas(jogadores, baralho, banca);
-		System.out.println("Cartas distribuidas");
-		System.out.println("<------------------------------->");
+		banca.getEstado().pegarApostas(jogadores);
+
+		banca.getEstado().destribuirCartas(jogadores, baralho, banca);
+
 		
 		
 		System.out.println("A primeira da mao da banca eh: " + super.getPrimeiraCarta().getCarta());
@@ -33,13 +28,13 @@ public class Banca extends BasicMetodos {
 		}	
 			
 
-		banca.estado.rodada(jogadores, baralho, banca);
+		banca.getEstado().rodada(jogadores, baralho, banca);
 			
-		banca.estado.jogar(banca, baralho);
+		banca.getEstado().jogar(banca, baralho);
 			
 		if(banca.estorou()) {
 			System.out.println("A banca estourou");
-			banca.estado.ganhadores(jogadores);
+			banca.getEstado().ganhadores(jogadores);
 		} 
 		
 		if (banca.getParou()) {
@@ -65,19 +60,19 @@ public class Banca extends BasicMetodos {
 		}
 	}
 			
-	public Jogador novoJogador() {
+	public VJogador novoJogador() {
 		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
 		
 		System.out.println("<---------------Entre com seu nome!---------------->");
 		System.out.print("Digite seu nome: ");
 		String nome = in.next();
-		Jogador jogador = new Jogador(nome);
+		VJogador jogador = new VJogador(nome);
 		System.out.println("<------------------------------->");			
 		return jogador;
 	}
 	
-	public void removerJogador (ArrayList<Jogador> jogadores) {
+	public void removerJogador (ArrayList<VJogador> jogadores) {
 		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
 	    int aux = 1;
@@ -94,8 +89,8 @@ public class Banca extends BasicMetodos {
 	    jogadores.remove(aux - 1);
 	}
 	
-	public void criarRodada(ArrayList<Jogador> jogadores, Banca banca){
-		ArrayList<Jogador> j = new ArrayList<Jogador>();
+	public void criarRodada(ArrayList<VJogador> jogadores, VBanca banca){
+		ArrayList<VJogador> j = new ArrayList<VJogador>();
 		if (jogadores == null) {
 			j.add(novoJogador());
 		}
@@ -154,7 +149,7 @@ public class Banca extends BasicMetodos {
 		}
 	}
 	
-	public void NovoJogo(Banca banca){
+	public void NovoJogo(VBanca banca){
 		@SuppressWarnings({ "resource", "unused" })
 		Scanner in = new Scanner(System.in);
 				
@@ -162,7 +157,7 @@ public class Banca extends BasicMetodos {
 		   
 	   }
 	
-	public void jogoSalvo(ArrayList<Jogador> jogadores, Banca banca) {
+	public void jogoSalvo(ArrayList<VJogador> jogadores, Banca banca) {
 		int opcao;
 		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
@@ -183,12 +178,12 @@ public class Banca extends BasicMetodos {
 							System.out.println(j.getNome());
 						}
 					}       
-	                criarRodada(jogadores, banca);
+	                criarRodada(jogadores, (VBanca) banca);
 					
 					break;
 					
 				case 2:
-						for(Jogador j : jogadores) {
+						for(VJogador j : jogadores) {
 							Gravar.Salvar(j);
 							System.out.println("\nJogo Salvo "+j.getNome()+"!");
 							System.out.println("");
@@ -200,6 +195,10 @@ public class Banca extends BasicMetodos {
 					break;
 				}
 	      }while(opcao != 0); 
+	}
+
+	public EstadosBanca getEstado() {
+		return estado;
 	}
 	
 }

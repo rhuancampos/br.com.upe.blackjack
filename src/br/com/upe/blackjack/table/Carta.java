@@ -5,11 +5,13 @@ public class Carta {
 	private int valor;
 	private String face;
 	private String naipe;
+
 	
 	public Carta(String naipe, int valor, String face) {
 		this.valor = valor;
 		this.face = face;
 		this.naipe = naipe;
+
 	}
 	
 	public int getValor() {
@@ -36,5 +38,6 @@ public class Carta {
 	public String printCart() {
 		return this.face + " de " + this.naipe;
 	}
+
 
 }

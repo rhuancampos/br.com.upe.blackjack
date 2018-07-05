@@ -2,7 +2,8 @@ package br.com.upe.blackjack.players;
 
 import java.util.Scanner;
 
-import br.com.upe.blackjack.table.Baralho;
+import br.com.upe.blackjack.interfaces.VBaralho;
+
 
 public class EstadosJogador {
 	private static EstadosJogador Instance;
@@ -14,7 +15,7 @@ public class EstadosJogador {
 		return Instance;
 	}
 	
-	public void jogar(Jogador j, Baralho baralho) {
+	public void jogar(Jogador j, VBaralho baralho) {
 		while (true) {
 			j.geraValorDasCartas();
 			if (j.vinteeum()) {
@@ -66,7 +67,7 @@ public class EstadosJogador {
 	    }
 	}
 	
-	public boolean pegarOutraCarta (Jogador j, Baralho baralho) {
+	public boolean pegarOutraCarta (Jogador j, VBaralho baralho) {
 		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
 		System.out.println("Deseja pegar outra carta?");

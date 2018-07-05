@@ -2,16 +2,17 @@ package br.com.upe.blackjack.players;
 
 import java.util.ArrayList;
 
+import br.com.upe.blackjack.interfaces.VCarta;
 import br.com.upe.blackjack.table.Carta;
 
 
 public abstract class BasicMetodos{
-	private ArrayList<Carta> mao = new ArrayList<Carta>();
+	protected ArrayList<VCarta> mao = new ArrayList<VCarta>();
 	protected int pontos = 0;
 	private boolean parou = false;
 	private boolean win = false;
 	
-	public void novaCarta (Carta carta) {
+	public void novaCarta (VCarta carta) {
 		mao.add(carta);
 	}
 	
@@ -28,6 +29,7 @@ public abstract class BasicMetodos{
 	        }
 	        this.pontos = aux;
 	        temAs(temAs);
+	        vinteeum();
 	    }
 		
 	}
@@ -64,11 +66,11 @@ public abstract class BasicMetodos{
         mao.clear();
 	}
 	
-	public ArrayList<Carta> getCartas() {
+	public ArrayList<VCarta> getCartas() {
 		return mao;
 	}
 
-	public void setCartas(ArrayList<Carta> mao) {
+	public void setCartas(ArrayList<VCarta> mao) {
 		this.mao = mao;
 	}
 
@@ -88,10 +90,14 @@ public abstract class BasicMetodos{
 		return aux;
 	}
 			
-	public Carta getPrimeiraCarta () {
+	public VCarta getPrimeiraCarta () {
 		return this.mao.get(0);
 	}
 
+	public ArrayList<VCarta> getMao() {
+		return this.mao;
+	}
+	
 	public boolean getParou() {
 		return parou;
 	}

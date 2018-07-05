@@ -9,14 +9,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+import br.com.upe.blackjack.interfaces.VJogador;
 import br.com.upe.blackjack.players.Banca;
 import br.com.upe.blackjack.players.Jogador;
 
 public abstract class Ler {
 	
-public static ArrayList<Jogador> retornaJogadores(){
+public static ArrayList<VJogador> retornaJogadores(){
 		
-		ArrayList<Jogador> jogadores = new ArrayList<>();
+		ArrayList<VJogador> jogadores = new ArrayList<>();
 	        
 	        Path path = Paths.get("Jogador.txt");
 			try (Scanner sc = new Scanner(Files.newBufferedReader(path, Charset.forName("utf8")))) {
@@ -27,7 +28,7 @@ public static ArrayList<Jogador> retornaJogadores(){
 				    nome = sc.next();
 				    dinheiro  = sc.next();
 				    float dinheiroJogador = Float.parseFloat(dinheiro);
-				    Jogador jogadorBanco = new Jogador(nome);
+				    VJogador jogadorBanco = new VJogador(nome);
 				    jogadorBanco.setDinheiro(dinheiroJogador);
 				    jogadores.add(jogadorBanco);
 			  }
@@ -75,17 +76,17 @@ public static ArrayList<Jogador> retornaJogadores(){
 		}
 	}
 	
-		public static void CarregaJogo(Jogador jogador){  
+		public static void CarregaJogo(VJogador jogador){  
 		   	System.out.println("\nOlá "+jogador.getNome()+" você possui R$"+jogador.getDinheiro() +" para apostas.\n");
 			Banca banca = new Banca();
-			ArrayList<Jogador> jogadorsalvo = new ArrayList<Jogador>();
+			ArrayList<VJogador> jogadorsalvo = new ArrayList<VJogador>();
 			jogadorsalvo.add(jogador);
 			banca.jogoSalvo(jogadorsalvo, banca);                 		   
 	   }
 	
 		public static void ListaJogadoresSalvos(){
 			   
-			   ArrayList<Jogador> jogadores = retornaJogadores();
+			   ArrayList<VJogador> jogadores = retornaJogadores();
 			   
 			   if(!jogadores.isEmpty()){
 			   System.out.println("---- Jogadores Salvos: ----\n");

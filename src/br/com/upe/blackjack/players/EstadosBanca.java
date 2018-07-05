@@ -2,6 +2,9 @@ package br.com.upe.blackjack.players;
 
 import java.util.ArrayList;
 
+import br.com.upe.blackjack.interfaces.VBanca;
+import br.com.upe.blackjack.interfaces.VBaralho;
+import br.com.upe.blackjack.interfaces.VJogador;
 import br.com.upe.blackjack.table.Baralho;
 
 
@@ -28,7 +31,7 @@ public class EstadosBanca {
 		}
 	}
 	
-	public void destribuirCartas (ArrayList<Jogador> jogadores, Baralho baralho, Banca banca) {
+	public void destribuirCartas (ArrayList<VJogador> jogadores, VBaralho baralho, VBanca banca) {
 		if (jogadores != null) {
 			for (Jogador j : jogadores) {
 				j.novaCarta(baralho.retiraPrimeiraCartaDoBaralho());
@@ -41,7 +44,7 @@ public class EstadosBanca {
 		}
 	}
 	
-	public void pegarApostas (ArrayList<Jogador> jogadores) {
+	public void pegarApostas (ArrayList<VJogador> jogadores) {
 		if (jogadores != null) {
 			for (Jogador j : jogadores) {
 				j.banco.coletarAposta(j);
@@ -49,7 +52,7 @@ public class EstadosBanca {
 		}
 	}
 	
-	public void rodada (ArrayList<Jogador> jogadores, Baralho baralho, Banca b) {
+	public void rodada (ArrayList<VJogador> jogadores, VBaralho baralho, Banca b) {
 		if (jogadores != null) {
 			for (Jogador j : jogadores) {
 				j.estado.jogar(j, baralho);
@@ -57,7 +60,7 @@ public class EstadosBanca {
 		}
 	}
 	
-	public void ganhadores(ArrayList<Jogador> jogadores) {
+	public void ganhadores(ArrayList<VJogador> jogadores) {
 		if (jogadores != null) {
 			for (Jogador j : jogadores) {
 				if(j.estorou()) {

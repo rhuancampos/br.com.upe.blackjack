@@ -3,7 +3,7 @@ package br.com.upe.blackjack.main;
 import java.util.Scanner;
 
 import br.com.upe.blackjack.dates.Ler;
-import br.com.upe.blackjack.players.Banca;
+import br.com.upe.blackjack.interfaces.VBanca;
 
 public class Main {
 
@@ -31,7 +31,7 @@ public class Main {
     		switch (opcao1) {
 			case 1:
 				
-				Banca banca = new Banca();				
+				VBanca banca = new VBanca();				
 				banca.NovoJogo(banca);
 			
 				break;

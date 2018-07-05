@@ -2,12 +2,13 @@ package br.com.upe.blackjack.table;
 
 import java.util.Scanner;
 
+
 import br.com.upe.blackjack.players.Jogador;
 
 
 public class Banco {
 	private float aposta = 0.0f;
-	private float dinheiro = 5000.0f;
+	private float dinheiro = 1000.0f;
 	
 	public void coletarAposta (Jogador j) {
 			@SuppressWarnings("resource")
