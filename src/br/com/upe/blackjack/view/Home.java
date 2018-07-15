@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -173,10 +172,12 @@ public class Home extends JFrame implements ActionListener, Runnable{
 	}
 	
 	private void pan_jogadores() {
+		//CODIGO THOMAS
+		
 		int WidthInfo = 600;
 		int HeighInfo = 25;
 		int WidthPainel = 600;
-		int HeighPainel = 120;
+		int HeighPainel = 180;
 		int y = 0;
 		
 		for (int i = 0; i < quantidadeJogadores; i++) {
@@ -208,7 +209,7 @@ public class Home extends JFrame implements ActionListener, Runnable{
 		label.setText("");
 		JPanel geral = new JPanel();
 		getContentPane().add(geral);
-		
+				
 	}
 		
 	public void novoJogo() {
@@ -283,10 +284,15 @@ public class Home extends JFrame implements ActionListener, Runnable{
 		nJogo.getJogadores().get(0).setParou(true);
 		if (nJogo.getJogadores().get(0).getPontos() >= nJogo.getVBanca().getPontos()) {
 			jogadorGanhou();
-		}
-		if (nJogo.getVBanca().getPontos() > 21) {
+		} else {
 			bancaGanhou();
 		}
+		if (nJogo.getVBanca().getPontos() > 21) {
+			
+		} else {
+			bancaGanhou();
+		}
+
 	}
 	
 	public void pegarCartas() {
@@ -327,7 +333,7 @@ public class Home extends JFrame implements ActionListener, Runnable{
 	}
 	
 	private void bancaGanhou() {
-		JOptionPane.showMessageDialog( null , " BANCA GANHOU!" , " " , JOptionPane.WARNING_MESSAGE ); 
+		JOptionPane.showMessageDialog( null , " BANCA GANHOU! PONTOS: " + nJogo.getVBanca().getPontos()  , " " , JOptionPane.WARNING_MESSAGE ); 
 		 
         this.desativarOpcoes();
          
@@ -437,6 +443,7 @@ public class Home extends JFrame implements ActionListener, Runnable{
         Component[] com = panel_menu_opcoes.getComponents();
  		
  		JButton b = (JButton)com[2];
+ 		bancaGanhou();
  		this.limpar();
  		b.setEnabled(true);
  		
@@ -487,5 +494,4 @@ public class Home extends JFrame implements ActionListener, Runnable{
 		// TODO Auto-generated method stub
 		
 	}
-
 }

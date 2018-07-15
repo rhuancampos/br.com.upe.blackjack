@@ -11,6 +11,7 @@ public abstract class BasicMetodos{
 	protected int pontos = 0;
 	private boolean parou = false;
 	private boolean win = false;
+	private int max = 21;
 	
 	public void novaCarta (VCarta carta) {
 		mao.add(carta);
@@ -49,14 +50,21 @@ public abstract class BasicMetodos{
 	}
 	
 	public boolean vinteeum() {
-		if (this.pontos == 21) {
+		if (this.pontos == max) {
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean estorou() {
-		if (this.pontos > 21) {
+		if (this.pontos > max) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean ganhou() {
+		if (this.pontos == max) {
 			return true;
 		}
 		return false;
